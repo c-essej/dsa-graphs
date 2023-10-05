@@ -58,20 +58,18 @@ class Graph {
    }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start, seen= new Set([start])) {
+  depthFirstSearch(start, result =[], seen= new Set([start])) {
+
+    result.push(start.value);
+
       for(let neighbor of start.adjacent){
         if(!seen.has(neighbor)){
           seen.add(neighbor);
-          this.depthFirstSearch(neighbor, seen);
+          this.depthFirstSearch(neighbor, result, seen);
         }
     }
 
-    let result = [];
-
-    for(let node of seen){
-      result.push(node.value);
-    }
-   return result;
+    return result;
   }
 
   /** traverse graph with BDS and returns array of Node values */
