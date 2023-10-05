@@ -58,18 +58,27 @@ class Graph {
    }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start, seen=[start]) {
+  depthFirstSearch(start, seen= new Set([start])) {
       for(let neighbor of start.adjacent){
-        if(!seen.includes(neighbor.value)){
-          seen.push(neighbor.value);
+        if(!seen.has(neighbor)){
+          seen.add(neighbor);
           this.depthFirstSearch(neighbor, seen);
         }
     }
-   return seen;
+
+    let seenArr = [];
+
+    for(let node of seen){
+      seenArr.push(node.value);
+    }
+   return seenArr;
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {
+
+
+  }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) { }
