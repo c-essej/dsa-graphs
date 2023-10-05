@@ -66,22 +66,54 @@ class Graph {
         }
     }
 
-    let seenArr = [];
+    let result = [];
 
     for(let node of seen){
-      seenArr.push(node.value);
+      result.push(node.value);
     }
-   return seenArr;
+   return result;
   }
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) {
+    let queue = [start];
+    let seen = new Set(queue);
+    let result = [];
 
+    while (queue.length > 0){
+      let currentNode = queue.shift();
 
+      for (let neighbor of currentNode.adjacent){
+        if (!seen.has(neighbor)){
+          queue.push(neighbor);
+          seen.add(neighbor);
+          result.push(neighbor.value);
+        }
+      }
+
+    }
+    return result;
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end) {
+
+    let queue = [[start, 0]]
+    let seen = new Set([start])
+
+    while (queue.length > 0){
+      let [currentNode, distance] = queue.shift();
+
+      if (currentNode === end) return distance;
+
+      for (let neighbor of currentNode.adjacent){
+        if (!seen.has(neighbor)){
+          queue.push([neighbor, distance +1])
+          seen.add(neighbor)
+        }
+      }
+    }
+  }
 }
 
 module.exports = { Graph, Node }
