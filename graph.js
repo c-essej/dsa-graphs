@@ -47,7 +47,6 @@ class Graph {
    * - update any adjacency lists using that vertex
    */
   removeVertex(vertex) {
-    console.log('****vertex', vertex);
     for (let node of this.nodes){
       for (let adjacency of node.adjacent){
         if (adjacency.value === vertex.value){
@@ -59,7 +58,15 @@ class Graph {
    }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start) { }
+  depthFirstSearch(start, seen=[start]) {
+      for(let neighbor of start.adjacent){
+        if(!seen.includes(neighbor.value)){
+          seen.push(neighbor.value);
+          this.depthFirstSearch(neighbor, seen);
+        }
+    }
+   return seen;
+  }
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) { }
